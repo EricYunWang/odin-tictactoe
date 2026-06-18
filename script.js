@@ -161,8 +161,7 @@ function displayControl(){
     const boardDiv = document.querySelector(".board");
 
     const update = () =>{
-        const board = newGame.getBoard();
-        console.log(board);
+        boardDiv.textContent = "";
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
                 const button = document.createElement("button");
@@ -173,6 +172,8 @@ function displayControl(){
         }
     }
     newGame.playRound(1,1);
+    update();
+    newGame.playRound(2,1);
     update();
 }
 
