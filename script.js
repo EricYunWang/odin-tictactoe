@@ -32,7 +32,9 @@ const gameBoard = (() => {
         return "false";
     }
 
-    const getBoard = (x,y) => board[x][y];
+    const getBoard = () => board;
+
+    const getBoardPosition = (x,y) => board[x][y];
 
     const printBoard = () => {
         for (let i = 0; i < rows; i++) {
@@ -41,8 +43,7 @@ const gameBoard = (() => {
         }
     }
     };
-
-    return {board, getTurn, modify1, modify2, getBoard, printBoard};
+    return {board, getTurn, modify1, modify2, getBoard, getBoardPosition, printBoard};
 
 })();
 
@@ -97,61 +98,82 @@ function gameControl(player1, player2){
     return {
         playRound,
         getCurrentPlayer,
+        getBoard: board.getBoard,
+        getBoardPosition: board.getBoardPosition
     }
 };
 
 function checkStopGame(board){
-    if(board.getBoard(0,0) == '1' && board.getBoard(0,1) == '1' && board.getBoard(0,2) == '1'){
+    if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(0,1) == '1' && board.getBoardPosition(0,2) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(1,0) == '1' && board.getBoard(1,1) == '1' && board.getBoard(1,2) == '1'){
+    if(board.getBoardPosition(1,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(1,2) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(2,0) == '1' && board.getBoard(2,1) == '1' && board.getBoard(2,2) == '1'){
+    if(board.getBoardPosition(2,0) == '1' && board.getBoardPosition(2,1) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,0) == '1' && board.getBoard(1,0) == '1' && board.getBoard(2,0) == '1'){
+    if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,0) == '1' && board.getBoardPosition(2,0) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,1) == '1' && board.getBoard(1,1) == '1' && board.getBoard(2,1) == '1'){
+    if(board.getBoardPosition(0,1) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,1) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,2) == '1' && board.getBoard(1,2) == '1' && board.getBoard(2,2) == '1'){
+    if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,2) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,0) == '1' && board.getBoard(1,1) == '1' && board.getBoard(2,2) == '1'){
+    if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,2) == '1' && board.getBoard(1,1) == '1' && board.getBoard(2,0) == '1'){
+    if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,0) == '1'){
         console.log("player1 won");
     }
-    if(board.getBoard(0,0) == '2' && board.getBoard(0,1) == '2' && board.getBoard(0,2) == '2'){
+    if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(0,1) == '2' && board.getBoardPosition(0,2) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(1,0) == '2' && board.getBoard(1,1) == '2' && board.getBoard(1,2) == '2'){
+    if(board.getBoardPosition(1,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(1,2) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(2,0) == '2' && board.getBoard(2,1) == '2' && board.getBoard(2,2) == '2'){
+    if(board.getBoardPosition(2,0) == '2' && board.getBoardPosition(2,1) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(0,0) == '2' && board.getBoard(1,0) == '2' && board.getBoard(2,0) == '2'){
+    if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,0) == '2' && board.getBoardPosition(2,0) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(0,1) == '2' && board.getBoard(1,1) == '2' && board.getBoard(2,1) == '2'){
+    if(board.getBoardPosition(0,1) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,1) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(0,2) == '2' && board.getBoard(1,2) == '2' && board.getBoard(2,2) == '2'){
+    if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,2) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(0,0) == '2' && board.getBoard(1,1) == '2' && board.getBoard(2,2) == '2'){
+    if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
     }
-    if(board.getBoard(0,2) == '2' && board.getBoard(1,1) == '2' && board.getBoard(2,0) == '2'){
+    if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,0) == '2'){
         console.log("player2 won");
     }
 }
 
-const player1 = Player("one", "X");
-const player2 = Player("two", "O");
-const newGame = gameControl(player1, player2);
-newGame.playRound(1,1);
+function displayControl(){
+    const player1 = Player("one", "X");
+    const player2 = Player("two", "O");
+    const newGame = gameControl(player1, player2);
+    const boardDiv = document.querySelector(".board");
+
+    const update = () =>{
+        const board = newGame.getBoard();
+        console.log(board);
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++){
+                const button = document.createElement("button");
+                button.classList.add("cell");
+                button.textContent = newGame.getBoardPosition(i,j);
+                boardDiv.appendChild(button);
+            }
+        }
+    }
+    newGame.playRound(1,1);
+    update();
+}
+
+displayControl();
