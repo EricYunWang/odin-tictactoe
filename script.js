@@ -22,7 +22,7 @@ const gameBoard = (() => {
         board[x][y] = '1';
         return "false";
     }
-    const modify2 = (x, y) =>{
+    const modify2 = (x, y) => {
         turn++;
         if(board[x][y] != 0){
             turn--;
@@ -40,11 +40,10 @@ const gameBoard = (() => {
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
                 console.log(board[i][j] + `,`);
+            }
         }
-    }
     };
     return {board, getTurn, modify1, modify2, getBoard, getBoardPosition, printBoard};
-
 })();
 
 const Player = (name, marker) => {
@@ -80,7 +79,6 @@ function gameControl(player1, player2){
             switchCurrentPlayer();
         }
         console.log(board);
-        checkStopGame(board);
         let turn = board.getTurn();
         console.log(turn);
         if(turn >= 9){
@@ -103,54 +101,75 @@ function gameControl(player1, player2){
     }
 };
 
-function checkStopGame(board){
+function checkStopGame(board) {
+    let stop = "true";
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(0,1) == '1' && board.getBoardPosition(0,2) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(1,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(1,2) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(2,0) == '1' && board.getBoardPosition(2,1) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,0) == '1' && board.getBoardPosition(2,0) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,1) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,1) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,2) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,2) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,0) == '1'){
         console.log("player1 won");
+        return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(0,1) == '2' && board.getBoardPosition(0,2) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(1,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(1,2) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(2,0) == '2' && board.getBoardPosition(2,1) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,0) == '2' && board.getBoardPosition(2,0) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(0,1) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,1) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,2) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,2) == '2'){
         console.log("player2 won");
+        return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,0) == '2'){
         console.log("player2 won");
+        return stop;
+    }
+    else {
+        stop = "false";
+        return stop;
     }
 }
 
@@ -165,15 +184,38 @@ function displayControl(){
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
                 const button = document.createElement("button");
+                button.dataset.x = i;
+                button.dataset.y = j;
                 button.classList.add("cell");
-                button.textContent = newGame.getBoardPosition(i,j);
+                if (newGame.getBoardPosition(i,j) == '1'){
+                    button.textContent = 'X';
+                }
+                else if (newGame.getBoardPosition(i,j) == '2'){
+                    button.textContent = 'O';
+                }
+                else {
+                    button.textContent = ' ';
+                }
                 boardDiv.appendChild(button);
             }
         }
+        let stopCon = checkStopGame(newGame);
+        if(stopCon == 'true'){
+            boardDiv.removeEventListener("click", clickHandler);
+
+        }
     }
-    newGame.playRound(1,1);
-    update();
-    newGame.playRound(2,1);
+
+    function clickHandler(e){
+        const selectedX = e.target.dataset.x;
+        const selectedY = e.target.dataset.y;
+        if(!selectedX || !selectedY){
+            return;
+        }
+        newGame.playRound(selectedX, selectedY);
+        update();
+    }
+    boardDiv.addEventListener("click", clickHandler);
     update();
 }
 
