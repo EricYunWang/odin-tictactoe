@@ -179,8 +179,8 @@ function checkStopGame(board) {
 }
 
 function displayControl(){
-    let player1 = Player("one", "X");
-    let player2 = Player("two", "O");
+    let player1 = Player("Player 1", "X");
+    let player2 = Player("Player 2", "O");
     const newGame = gameControl(player1, player2);
     const boardDiv = document.querySelector(".board");
     const resetBut = document.querySelector(".reset");
@@ -189,12 +189,13 @@ function displayControl(){
 
     const update = () =>{
         let currentP = newGame.getCurrentPlayer();
-        if(currentP.name == 'one'){
-            turnDiv.textContent = 'Current Turn: Player 1 X';
-        }
-        else{
-            turnDiv.textContent = 'Current Turn: Player 2 O';
-        }
+        // if(currentP.name == 'one'){
+        //     turnDiv.textContent = 'Current Turn: Player 1 X';
+        // }
+        // else{
+        //     turnDiv.textContent = 'Current Turn: Player 2 O';
+        // }
+        turnDiv.textContent = `Current Turn: ${currentP.name}  ` + `${currentP.marker}`;
         boardDiv.textContent = "";
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){

@@ -1,6 +1,10 @@
 body{
     display: grid;
     place-items: center;
+    background-color: rgb(63, 61, 61);
+}
+.turn{
+    color: rgb(221, 221, 215);
 }
 .board {
   display: grid;
@@ -11,7 +15,7 @@ body{
   border: 1px solid black;
   gap: 2px;
   padding: 2px;
-  background-color: yellow;
+  background-color: rgb(66, 78, 83);
 }
 
 .cell {
@@ -21,6 +25,30 @@ body{
   text-align: center;
   font-size: 2rem;
   border: 1px solid grey;
-  background: lightyellow;
+  background: rgb(221, 221, 215);
   cursor: pointer;
+}
+
+button{
+    background-color: rgb(221, 221, 215); /* Dark background pops on both grey and white */
+    color: rgb(63, 61, 61); /* White text */
+    border: 2px solid transparent;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover{
+        background-color: #ffffff;
+    color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+
+.buttons{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
 }
