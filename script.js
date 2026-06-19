@@ -3,7 +3,7 @@ const gameBoard = (() => {
     const columns = 3;
     const board = [];
     let turn = 0;
-    const turnDiv = document.querySelector(".turn");
+    
 
     for (let i = 0; i < rows; i++) {
         board[i] = [];
@@ -20,7 +20,6 @@ const gameBoard = (() => {
             }
         }
         turn = 0;
-        turnDiv.textContent = "Current Turn: Player 1 X";
     }
 
     const getTurn = () => turn;
@@ -64,18 +63,15 @@ const Player = (name, marker) => {
 
 function gameControl(player1, player2){
     const board = gameBoard;
-    const turnDiv = document.querySelector(".turn");
 
     let currentPlayer = player1;
 
     const switchCurrentPlayer = () =>{
         if(currentPlayer == player1){
             currentPlayer = player2;
-            turnDiv.textContent = "Current Turn: Player 2 O";
         }
         else {
             currentPlayer = player1;
-            turnDiv.textContent = "Current Turn: Player 1 X";
         }
     };
     
@@ -187,9 +183,18 @@ function displayControl(){
     let player2 = Player("two", "O");
     const newGame = gameControl(player1, player2);
     const boardDiv = document.querySelector(".board");
-    const resetBut = document.querySelector(".reset")
+    const resetBut = document.querySelector(".reset");
+    const turnDiv = document.querySelector(".turn");
+
 
     const update = () =>{
+        let currentP = newGame.getCurrentPlayer();
+        if(currentP.name == 'one'){
+            turnDiv.textContent = 'Current Turn: Player 1 X';
+        }
+        else{
+            turnDiv.textContent = 'Current Turn: Player 2 O';
+        }
         boardDiv.textContent = "";
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
