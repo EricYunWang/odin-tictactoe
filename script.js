@@ -3,12 +3,24 @@ const gameBoard = (() => {
     const columns = 3;
     const board = [];
     let turn = 0;
+    const turnDiv = document.querySelector(".turn");
 
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
             board[i].push('0');
         }
+    }
+
+    const reset = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i].push('0');
+            }
+        }
+        turn = 0;
+        turnDiv.textContent = "Current Turn: Player 1 X";
     }
 
     const getTurn = () => turn;
@@ -43,7 +55,7 @@ const gameBoard = (() => {
             }
         }
     };
-    return {board, getTurn, modify1, modify2, getBoard, getBoardPosition, printBoard};
+    return {board, getTurn, modify1, modify2, getBoard, getBoardPosition, printBoard, reset};
 })();
 
 const Player = (name, marker) => {
@@ -52,16 +64,18 @@ const Player = (name, marker) => {
 
 function gameControl(player1, player2){
     const board = gameBoard;
-    console.log(board);
+    const turnDiv = document.querySelector(".turn");
 
     let currentPlayer = player1;
 
     const switchCurrentPlayer = () =>{
         if(currentPlayer == player1){
             currentPlayer = player2;
+            turnDiv.textContent = "Current Turn: Player 2 O";
         }
         else {
             currentPlayer = player1;
+            turnDiv.textContent = "Current Turn: Player 1 X";
         }
     };
     
@@ -78,12 +92,6 @@ function gameControl(player1, player2){
         if(occupied == "false"){
             switchCurrentPlayer();
         }
-        if(currentPlayer == player1){
-            console.log("Player1's turn");
-        }
-        else {
-            console.log("Player2's turn");
-        }
     }
 
     return {
@@ -91,78 +99,81 @@ function gameControl(player1, player2){
         getCurrentPlayer,
         getBoard: board.getBoard,
         getBoardPosition: board.getBoardPosition,
-        getTurn: board.getTurn
+        getTurn: board.getTurn,
+        reset: board.reset
     }
 };
 
 function checkStopGame(board) {
     let stop = "true";
+    const turnDiv = document.querySelector(".turn");
+
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(0,1) == '1' && board.getBoardPosition(0,2) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(1,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(1,2) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(2,0) == '1' && board.getBoardPosition(2,1) == '1' && board.getBoardPosition(2,2) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,0) == '1' && board.getBoardPosition(2,0) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,1) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,1) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,2) == '1' && board.getBoardPosition(2,2) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,2) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,0) == '1'){
-        console.log("player1 won");
+        turnDiv.textContent = "Player 1 Won";
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(0,1) == '2' && board.getBoardPosition(0,2) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(1,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(1,2) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(2,0) == '2' && board.getBoardPosition(2,1) == '2' && board.getBoardPosition(2,2) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,0) == '2' && board.getBoardPosition(2,0) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(0,1) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,1) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,2) == '2' && board.getBoardPosition(2,2) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,2) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,0) == '2'){
-        console.log("player2 won");
+        turnDiv.textContent = "Player 2 Won";
         return stop;
     }
     if(board.getTurn() == 9){
-        console.log("It's a tie");
+        turnDiv.textContent = "Tie Game";
         return stop;
     }
     else {
@@ -172,10 +183,11 @@ function checkStopGame(board) {
 }
 
 function displayControl(){
-    const player1 = Player("one", "X");
-    const player2 = Player("two", "O");
+    let player1 = Player("one", "X");
+    let player2 = Player("two", "O");
     const newGame = gameControl(player1, player2);
     const boardDiv = document.querySelector(".board");
+    const resetBut = document.querySelector(".reset")
 
     const update = () =>{
         boardDiv.textContent = "";
@@ -212,8 +224,17 @@ function displayControl(){
         newGame.playRound(selectedX, selectedY);
         update();
     }
+
+    function resetButton(){
+        newGame.reset();
+        displayControl();
+    }
+
     boardDiv.addEventListener("click", clickHandler);
+    resetBut.addEventListener("click", resetButton);
+
     update();
 }
+
 
 displayControl();
