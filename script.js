@@ -78,13 +78,6 @@ function gameControl(player1, player2){
         if(occupied == "false"){
             switchCurrentPlayer();
         }
-        console.log(board);
-        let turn = board.getTurn();
-        console.log(turn);
-        if(turn >= 9){
-            console.log("Tie");
-        }
-
         if(currentPlayer == player1){
             console.log("Player1's turn");
         }
@@ -97,7 +90,8 @@ function gameControl(player1, player2){
         playRound,
         getCurrentPlayer,
         getBoard: board.getBoard,
-        getBoardPosition: board.getBoardPosition
+        getBoardPosition: board.getBoardPosition,
+        getTurn: board.getTurn
     }
 };
 
@@ -167,6 +161,10 @@ function checkStopGame(board) {
         console.log("player2 won");
         return stop;
     }
+    if(board.getTurn() == 9){
+        console.log("It's a tie");
+        return stop;
+    }
     else {
         stop = "false";
         return stop;
@@ -202,7 +200,6 @@ function displayControl(){
         let stopCon = checkStopGame(newGame);
         if(stopCon == 'true'){
             boardDiv.removeEventListener("click", clickHandler);
-
         }
     }
 
