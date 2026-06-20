@@ -2,8 +2,7 @@ const gameBoard = (() => {
     const rows = 3;
     const columns = 3;
     const board = [];
-    let turn = 0;
-    
+    let turn = 0;    
 
     for (let i = 0; i < rows; i++) {
         board[i] = [];
@@ -62,7 +61,8 @@ const Player = (name, marker) => {
 };
 
 function gameControl(player1, player2){
-    const board = gameBoard;
+    let board = gameBoard;
+    const turnDiv = document.querySelector(".turn");
 
     let currentPlayer = player1;
 
@@ -73,6 +73,7 @@ function gameControl(player1, player2){
         else {
             currentPlayer = player1;
         }
+        turnDiv.textContent = `Current Turn: ${currentPlayer.name}  ` + `${currentPlayer.marker}`;
     };
     
     const getCurrentPlayer = () => currentPlayer;
@@ -89,6 +90,11 @@ function gameControl(player1, player2){
             switchCurrentPlayer();
         }
     }
+    const gameRestart = () => {
+        board.reset();
+        switchCurrentPlayer();
+        turnDiv.textContent = `Current Turn: ${currentPlayer.name}  ` + `${currentPlayer.marker}`;
+        };
 
     return {
         playRound,
@@ -96,8 +102,9 @@ function gameControl(player1, player2){
         getBoard: board.getBoard,
         getBoardPosition: board.getBoardPosition,
         getTurn: board.getTurn,
-        reset: board.reset
-    }
+        reset: board.reset,
+        gameRestart
+        }
 };
 
 function checkStopGame(board) {
@@ -179,23 +186,14 @@ function checkStopGame(board) {
 }
 
 function displayControl(){
+
     let player1 = Player("Player 1", "X");
     let player2 = Player("Player 2", "O");
-    const newGame = gameControl(player1, player2);
+    let newGame = gameControl(player1, player2);
     const boardDiv = document.querySelector(".board");
     const resetBut = document.querySelector(".reset");
-    const turnDiv = document.querySelector(".turn");
-
 
     const update = () =>{
-        let currentP = newGame.getCurrentPlayer();
-        // if(currentP.name == 'one'){
-        //     turnDiv.textContent = 'Current Turn: Player 1 X';
-        // }
-        // else{
-        //     turnDiv.textContent = 'Current Turn: Player 2 O';
-        // }
-        turnDiv.textContent = `Current Turn: ${currentP.name}  ` + `${currentP.marker}`;
         boardDiv.textContent = "";
         for(let i = 0; i < 3; i++){
             for(let j = 0; j < 3; j++){
@@ -233,6 +231,7 @@ function displayControl(){
 
     function resetButton(){
         newGame.reset();
+        newGame.gameRestart();
         displayControl();
     }
 
@@ -241,6 +240,5 @@ function displayControl(){
 
     update();
 }
-
 
 displayControl();

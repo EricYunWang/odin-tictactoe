@@ -30,8 +30,8 @@ body{
 }
 
 button{
-    background-color: rgb(221, 221, 215); /* Dark background pops on both grey and white */
-    color: rgb(63, 61, 61); /* White text */
+    background-color: rgb(221, 221, 215);
+    color: rgb(63, 61, 61);
     border: 2px solid transparent;
     padding: 12px 24px;
     font-size: 16px;
@@ -42,7 +42,7 @@ button{
 }
 
 button:hover{
-        background-color: #ffffff;
+    background-color: #ffffff;
     color: #1a1a1a;
     border-color: #1a1a1a;
 }
