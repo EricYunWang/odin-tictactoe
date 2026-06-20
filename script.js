@@ -56,8 +56,14 @@ const gameBoard = (() => {
     return {board, getTurn, modify1, modify2, getBoard, getBoardPosition, printBoard, reset};
 })();
 
-const Player = (name, marker) => {
-    return {name, marker};
+const Player = (newName, marker) => {
+    let name = newName;
+
+    return {
+    get name() { return name; },
+    set name(newName) { name = newName; },
+    marker
+  };
 };
 
 function gameControl(player1, player2){
@@ -94,7 +100,7 @@ function gameControl(player1, player2){
         board.reset();
         currentPlayer = player1;
         turnDiv.textContent = `Current Turn: ${currentPlayer.name}  ` + `${currentPlayer.marker}`;
-        };
+    };
 
     return {
         playRound,
@@ -112,67 +118,67 @@ function checkStopGame(board) {
     const turnDiv = document.querySelector(".turn");
 
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(0,1) == '1' && board.getBoardPosition(0,2) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(1,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(1,2) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(2,0) == '1' && board.getBoardPosition(2,1) == '1' && board.getBoardPosition(2,2) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,0) == '1' && board.getBoardPosition(2,0) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,1) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,1) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,2) == '1' && board.getBoardPosition(2,2) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,0) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,2) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,2) == '1' && board.getBoardPosition(1,1) == '1' && board.getBoardPosition(2,0) == '1'){
-        turnDiv.textContent = "Player 1 Won";
+        turnDiv.textContent = `${player1.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(0,1) == '2' && board.getBoardPosition(0,2) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(1,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(1,2) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(2,0) == '2' && board.getBoardPosition(2,1) == '2' && board.getBoardPosition(2,2) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,0) == '2' && board.getBoardPosition(2,0) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,1) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,1) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,2) == '2' && board.getBoardPosition(2,2) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,0) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,2) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getBoardPosition(0,2) == '2' && board.getBoardPosition(1,1) == '2' && board.getBoardPosition(2,0) == '2'){
-        turnDiv.textContent = "Player 2 Won";
+        turnDiv.textContent = `${player2.name} won`;
         return stop;
     }
     if(board.getTurn() == 9){
@@ -187,11 +193,11 @@ function checkStopGame(board) {
 
 function displayControl(){
 
-    let player1 = Player("Player 1", "X");
-    let player2 = Player("Player 2", "O");
     let newGame = gameControl(player1, player2);
     const boardDiv = document.querySelector(".board");
     const resetBut = document.querySelector(".reset");
+    const form = document.getElementById("player-form");
+
 
     const update = () =>{
         boardDiv.textContent = "";
@@ -230,15 +236,25 @@ function displayControl(){
     }
 
     function resetButton(){
-        newGame.reset();
+        resetBut.removeEventListener("click", resetButton);
         newGame.gameRestart();
         displayControl();
     }
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        const formData = new FormData(form);
+        const p1Name = formData.get("player1");
+        const p2Name = formData.get("player2");
+        player1.name = p1Name;
+        player2.name = p2Name;
+        resetButton();
+    })
 
     boardDiv.addEventListener("click", clickHandler);
     resetBut.addEventListener("click", resetButton);
 
     update();
 }
-
+let player1 = Player("Player 1", "X");
+let player2 = Player("Player 2", "O");
 displayControl();
