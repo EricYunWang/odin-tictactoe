@@ -92,7 +92,7 @@ function gameControl(player1, player2){
     }
     const gameRestart = () => {
         board.reset();
-        switchCurrentPlayer();
+        currentPlayer = player1;
         turnDiv.textContent = `Current Turn: ${currentPlayer.name}  ` + `${currentPlayer.marker}`;
         };
 
